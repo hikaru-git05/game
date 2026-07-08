@@ -8,13 +8,15 @@
 <title>Hopper's Quest</title>
 <style>
   html, body {
-    margin: 0; padding: 0; width: 100%; height: 100%;
-    background: #0d1b2a; overflow: hidden; touch-action: none;
-    -webkit-user-select: none; user-select: none; overscroll-behavior: none;
+    margin: 0; padding: 0; width: 100%;
+    background: #0d1b2a;
+    -webkit-user-select: none; user-select: none;
     font-family: -apple-system, "Hiragino Sans", "Yu Gothic", sans-serif;
   }
   #stage {
-    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    position: relative; width: 100%; height: 100vh; max-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; touch-action: none; overscroll-behavior: none;
   }
   #game {
     background: #7ec8ff; touch-action: none;
@@ -34,7 +36,7 @@
   #btnJump   { right: 100px; bottom: 44px; width: 84px; height: 84px; }
   #btnDash   { right: 18px;  bottom: 110px; width: 66px; height: 66px; }
   #overlay {
-    position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center;
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
     justify-content: center; color: #fff; text-align: center; background: rgba(10,20,35,0.88);
     font-family: -apple-system, "Hiragino Sans", "Yu Gothic", sans-serif;
   }
@@ -54,51 +56,85 @@
   #overlay button.secondary:active { transform: translateY(2px); }
   .hidden { display: none !important; }
 
-  /* ---------- Ad banner slot ----------
-     ここに広告SDKのタグ/スクリプトを差し込みます。
-     例: Google AdSense の <ins class="adsbygoogle">...</ins>
-     例: CrazyGames/Poki等のポータルSDKが自動挿入するバナー
-     ゲームプレイ中は表示しない設計（ポータル審査/ユーザー体験のため）。
+  /* ---------- Real page content + ad slot ----------
+     AdSenseポリシー対応:
+     「パブリッシャーのコンテンツを含まない画面」（タイトル/ゲームオーバー等のアクションのみの
+     オーバーレイ）には広告を出さない。代わりに、実際の文章コンテンツ（ゲーム説明・遊び方・
+     クレジット）を伴う通常のページ領域に広告を配置する。ゲームプレイ中や、CTAボタンしか
+     ないオーバーレイの上に広告を重ねて出す実装はNG。
   */
-     
-  #adBanner {
-    position: fixed; left: 0; right: 0; bottom: 0; height: 54px; z-index: 9999;
-    display: none; align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.55); color: rgba(255,255,255,0.6); font-size: 12px;
+  #siteWrap { max-width: 960px; margin: 0 auto; }
+  #pageContent {
+    color: #eaf2ff; padding: 20px 16px 8px; line-height: 1.8; font-size: 15px;
+  }
+  #pageContent h2 { color: #ffd166; font-size: 20px; margin: 0 0 8px; }
+  #pageContent h3 { color: #ffd166; font-size: 16px; margin: 18px 0 6px; }
+  #pageContent p { margin: 6px 0; opacity: 0.9; }
+  #adSlotTop, #adSlotBottom {
+    margin: 16px 0; min-height: 90px; display: flex; align-items: center; justify-content: center;
   }
 </style>
 </head>
 <body>
-<div id="stage">
-  <canvas id="game" width="960" height="540"></canvas>
+<div id="siteWrap">
+
+  <div id="pageContent">
+    <h2>ホッパーズ・クエスト（Hopper's Quest）</h2>
+    <p>左右移動・ジャンプ・二段ジャンプ・ダッシュ・壁ジャンプを駆使して、コインを集めながらゴールを目指す2Dアクションゲームです。ステージは「みどりの丘」「そらの島」「どうくつラン」の全3面、全て高難易度に調整されています。</p>
+  </div>
+
+  <!-- 広告枠1: 実際の紹介文コンテンツに付随して配置（ゲーム画面/オーバーレイの上には出さない） -->
+  <div id="adSlotTop">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-7561000961528504"
+         data-ad-slot="9367330492"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+  <div id="stage">
+    <canvas id="game" width="960" height="540"></canvas>
+
+    <div id="btnLeft" class="btn">◀</div>
+    <div id="btnRight" class="btn">▶</div>
+    <div id="btnDash" class="btn">⚡</div>
+    <div id="btnJump" class="btn">⤒</div>
+
+    <div id="overlay">
+      <h1>HOPPER'S QUEST</h1>
+      <p id="ovText">左右で移動、ジャンプで跳ぶ。空中でもう一度ジャンプで二段ジャンプ！<br>ダッシュボタンで前方に突進、敵は踏んで倒そう。<br>壁に体当たりしてジャンプすると壁ジャンプもできるよ。</p>
+      <button id="ovButton">はじめる</button>
+      <button id="ovButton2" class="secondary hidden">📺 広告を見て残機+1</button>
+      <button id="ovRemoveAds" class="secondary hidden">💎 広告を消す・全ステージ解放</button>
+    </div>
+  </div>
+
+  <div id="pageContent">
+    <h3>遊び方</h3>
+    <p>画面左下のボタンで左右移動、右下の丸ボタンでジャンプ（空中でもう一度押すと二段ジャンプ）。稲妻ボタンでダッシュ突進ができます。キーボードでは矢印キー／WASD、ジャンプはSpaceかZ、ダッシュはShiftかXでも操作できます。</p>
+    <h3>ステージ紹介</h3>
+    <p>1-1 みどりの丘：足場が少なく敵の往復も速い、序盤から高難易度のステージです。</p>
+    <p>1-2 そらの島：足場を細かく飛び移りながら進む空中パルクールステージです。</p>
+    <p>1-3 どうくつラン：長距離の洞窟を駆け抜ける最終ステージです。</p>
+  </div>
+
+  <!-- 広告枠2: ページ下部の説明コンテンツに付随 -->
+  <div id="adSlotBottom">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-7561000961528504"
+         data-ad-slot="9367330492"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
 </div>
 
-<div id="btnLeft" class="btn">◀</div>
-<div id="btnRight" class="btn">▶</div>
-<div id="btnDash" class="btn">⚡</div>
-<div id="btnJump" class="btn">⤒</div>
-
-<div id="overlay">
-  <h1>HOPPER'S QUEST</h1>
-  <p id="ovText">左右で移動、ジャンプで跳ぶ。空中でもう一度ジャンプで二段ジャンプ！<br>ダッシュボタンで前方に突進、敵は踏んで倒そう。<br>壁に体当たりしてジャンプすると壁ジャンプもできるよ。</p>
-  <button id="ovButton">はじめる</button>
-  <button id="ovButton2" class="secondary hidden">📺 広告を見て残機+1</button>
-  <button id="ovRemoveAds" class="secondary hidden">💎 広告を消す・全ステージ解放</button>
-</div>
-
-<!-- 広告バナー枠: プレイ中は非表示、タイトル/ゲームオーバー等の画面でのみ表示 -->
-<div id="adBanner"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7561000961528504"
-     crossorigin="anonymous"></script>
-<!-- 広告みたら復活 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-7561000961528504"
-     data-ad-slot="9367330492"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
 <script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script></div>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 <script>
 (function(){
@@ -110,7 +146,8 @@ var ctx = canvas.getContext('2d');
 var W = 960, H = 540;
 
 function fitCanvas(){
-  var vw = window.innerWidth, vh = window.innerHeight;
+  var stage = document.getElementById('stage');
+  var vw = stage.clientWidth, vh = stage.clientHeight;
   var scale = Math.min(vw / W, vh / H);
   canvas.style.width = (W*scale) + 'px';
   canvas.style.height = (H*scale) + 'px';
@@ -176,16 +213,16 @@ window.addEventListener('keyup', function(e){
 });
 
 // ---------- Monetization ----------
-// このブロックだけ差し替えれば、広告SDK・課金リンクを本番のものに接続できます。
+// 表示広告(AdSense)はページ本体の紹介コンテンツ内に固定配置済み（HTML側）。
+// ゲーム内オーバーレイ(タイトル/ゲームオーバー/クリア画面)には表示広告を出さない。
 //
-// 1) 広告: 自前サイトなら Google AdSense、ポータル(CrazyGames/Poki/GameDistribution等)に
-//    投稿するならそのポータルが提供するSDKに置き換えてください。
-// 2) 課金: Apple審査を通さない前提なので、Stripeの支払いリンク（コード不要でダッシュボードから発行可）
-//    を REMOVE_ADS_URL に差し替えるだけで動きます。決済成功後にこのページへ ?premium=1 を付けて
-//    リダイレクトするよう Stripe 側で設定してください。
-//    ※ URLパラメータだけの簡易判定なので、なりすまし対策としては弱いです。厳密にやるなら
-//      Stripe Webhook を受けるサーバー(Netlify Functions等)を用意し、購入済みトークンを発行する形に
-//      してください。
+// リワード広告(残機+1)は表示広告と別物として扱う。実運用では、ポータルSDK
+// (CrazyGames/Poki等)のリワード広告API、またはGoogle Ad Managerの
+// リワード付き広告フォーマットに置き換えること。AdSenseの通常バナーユニットを
+// リワード広告として転用しない。
+//
+// 課金: Stripeの支払いリンクをREMOVE_ADS_URLに設定。決済成功後 ?premium=1 を付けて
+// このページへリダイレクトする想定（簡易判定のため、厳密にはWebhook検証を推奨）。
 
 var REMOVE_ADS_URL = 'https://buy.stripe.com/REPLACE_WITH_YOUR_PAYMENT_LINK';
 
@@ -194,8 +231,6 @@ var isPremium = false;
   try {
     isPremium = window.localStorage.getItem('hq_premium') === '1';
   } catch(e){
-    // Claudeのプレビュー環境などlocalStorageが使えない場合はここに来ます。
-    // 実際に自分のサイトでホストすれば通常のブラウザでは問題なく動きます。
     isPremium = false;
   }
 })();
@@ -203,7 +238,6 @@ var isPremium = false;
 function setPremium(val){
   isPremium = val;
   try { window.localStorage.setItem('hq_premium', val ? '1':'0'); } catch(e){}
-  syncAdBanner();
 }
 
 function checkPremiumFromURL(){
@@ -214,31 +248,17 @@ function checkPremiumFromURL(){
 }
 checkPremiumFromURL();
 
-function syncAdBanner(){
-  var el = document.getElementById('adBanner');
-  var show = (state !== STATE_PLAY) && !isPremium;
-  el.style.display = show ? 'flex' : 'none';
-}
-
 // リワード広告のスタブ。実際の広告ネットワーク/ポータルSDKの呼び出しに置き換えてください。
-// 例(CrazyGames SDK): window.CrazyGames.SDK.ad.requestAd('rewarded', { adFinished: onReward, adError: onReward });
-// 例(汎用): 自前のリワード広告ネットワークのJS SDKをここで呼ぶ。
 function showRewardedAd(onReward){
-  document.getElementById('adBannerLabel').textContent = '広告を再生中...(スタブ)';
-  syncAdBannerForce(true);
+  ovText.innerHTML = '広告を再生中...(スタブ)';
   setTimeout(function(){
-    syncAdBanner();
     onReward();
   }, 1200);
-}
-function syncAdBannerForce(show){
-  document.getElementById('adBanner').style.display = show ? 'flex' : 'none';
 }
 
 var continueUsed = false;
 
 // ---------- Level data ----------
-// helper to make rects
 function R(x,y,w,h){ return {x:x,y:y,w:w,h:h}; }
 
 var GROUND_Y = 460;
@@ -933,14 +953,12 @@ function showOverlay(title, text, buttonLabel, opts){
   ovButton2.classList.toggle('hidden', !opts.watchAd);
   ovRemoveAds.classList.toggle('hidden', !(opts.removeAds && !isPremium));
   overlayEl.classList.remove('hidden');
-  syncAdBanner();
 }
-function hideOverlay(){ overlayEl.classList.add('hidden'); syncAdBanner(); }
+function hideOverlay(){ overlayEl.classList.add('hidden'); }
 
-// 初期表示（タイトル画面）でも課金/広告状態を反映
+// 初期表示（タイトル画面）の課金状態反映
 ovButton2.classList.add('hidden');
 ovRemoveAds.classList.toggle('hidden', isPremium);
-syncAdBanner();
 
 ovButton.addEventListener('pointerdown', function(e){
   e.preventDefault();
@@ -967,7 +985,6 @@ ovButton.addEventListener('pointerdown', function(e){
     ovButton.textContent = 'はじめる';
     ovButton2.classList.add('hidden');
     ovRemoveAds.classList.toggle('hidden', isPremium);
-    syncAdBanner();
   }
 });
 
