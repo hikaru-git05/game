@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>このサイトについて・お問い合わせ | Hopper's Quest</title>
+<meta name="description" content="ブラウザゲーム「Hopper's Quest」の運営者情報・お問い合わせ先について説明しています。">
+<style>
+  html, body { margin:0; padding:0; background:#0d1b2a; font-family: -apple-system, "Hiragino Sans", "Yu Gothic", sans-serif; }
+  #siteWrap { max-width: 780px; margin: 0 auto; }
+  #siteHeader {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    padding: 14px 16px; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  #siteHeader .logo { color: #ffd166; font-weight: 700; font-size: 18px; text-decoration: none; letter-spacing: 0.5px; }
+  #siteHeader nav { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  #siteHeader nav a { color: #cfe0f5; text-decoration: none; font-size: 13px; opacity: 0.85; }
+  #siteHeader nav a:hover, #siteHeader nav a:focus { opacity: 1; text-decoration: underline; }
+  main { color: #eaf2ff; padding: 24px 16px 8px; line-height: 1.9; font-size: 15px; }
+  main h1 { color: #ffd166; font-size: 24px; margin: 0 0 18px; }
+  main h2 { color: #ffd166; font-size: 17px; margin: 26px 0 8px; }
+  main p { margin: 8px 0; opacity: 0.92; }
+  main ul { margin: 8px 0; padding-left: 20px; opacity: 0.92; }
+  main a { color: #ffd166; }
+  #siteFooter {
+    color: #9fb2c9; font-size: 12px; padding: 22px 16px 32px; text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.12); margin-top: 12px; line-height: 2;
+  }
+  #siteFooter a { color: #cfe0f5; text-decoration: none; margin: 0 8px; }
+  #siteFooter a:hover, #siteFooter a:focus { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div id="siteWrap">
+
+  <header id="siteHeader">
+    <a class="logo" href="index.html">🐸 Hopper's Quest</a>
+    <nav>
+      <a href="index.html">ホーム・プレイ</a>
+      <a href="about.html">このサイトについて</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="terms.html">利用規約</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>このサイトについて・お問い合わせ</h1>
+
+    <h2>運営者情報</h2>
+    <p>本サイト「Hopper's Quest」は、個人開発者が趣味・学習目的で制作しているブラウザゲームサイトです。HTML5 CanvasとWebAudio APIのみで作られたアクションゲームを、ダウンロード不要・無料で公開しています。</p>
+    <p>運営者：（ここに運営者名またはハンドルネームを記載してください）<br>
+    運営開始：2026年<br>
+    所在地：日本</p>
+
+    <h2>サイトの目的</h2>
+    <p>「操作に慣れてきた頃にちょうど良い歯ごたえのアクションゲームが欲しい」という発想から、二段ジャンプ・ダッシュ・壁ジャンプを組み合わせて遊べる高難易度の2Dアクションゲームを制作・公開しています。今後も新しいステージやミニゲームの追加を予定しています。</p>
+
+    <h2>お問い合わせ</h2>
+    <p>ゲームの不具合報告、難易度に関するご意見、その他お問い合わせは以下のメールアドレスまでご連絡ください。通常3〜5営業日以内に返信いたします。</p>
+    <p>メール：<a href="mailto:contact@example.com">contact@example.com</a>（実際の連絡先メールアドレスに差し替えてください）</p>
+
+    <h2>広告について</h2>
+    <p>本サイトはGoogle AdSenseを利用して広告を掲載し、サイト運営費に充てています。広告の取り扱いについては<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+  </main>
+
+  <footer id="siteFooter">
+    <div>
+      <a href="index.html">ホーム</a>|
+      <a href="about.html">このサイトについて・お問い合わせ</a>|
+      <a href="privacy.html">プライバシーポリシー</a>|
+      <a href="terms.html">利用規約</a>
+    </div>
+    <div>&copy; <span id="yearNow">2026</span> Hopper's Quest. 個人が制作・運営する無料ブラウザゲームサイトです。</div>
+  </footer>
+
+</div>
+<script>document.getElementById('yearNow').textContent = new Date().getFullYear();</script>
+</body>
+</html>
