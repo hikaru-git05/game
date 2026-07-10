@@ -56,13 +56,7 @@
   #overlay button.secondary:active { transform: translateY(2px); }
   .hidden { display: none !important; }
 
-  /* ---------- Real page content + ad slot ----------
-     AdSenseポリシー対応:
-     「パブリッシャーのコンテンツを含まない画面」（タイトル/ゲームオーバー等のアクションのみの
-     オーバーレイ）には広告を出さない。代わりに、実際の文章コンテンツ（ゲーム説明・遊び方・
-     クレジット）を伴う通常のページ領域に広告を配置する。ゲームプレイ中や、CTAボタンしか
-     ないオーバーレイの上に広告を重ねて出す実装はNG。
-  */
+  /* ---------- Real page content + ad slot ---------- */
   #siteWrap { max-width: 960px; margin: 0 auto; }
   #pageContent {
     color: #eaf2ff; padding: 20px 16px 8px; line-height: 1.8; font-size: 15px;
@@ -73,10 +67,36 @@
   #adSlotTop, #adSlotBottom {
     margin: 16px 0; min-height: 90px; display: flex; align-items: center; justify-content: center;
   }
+
+  /* ---------- Site header / footer (shared across all pages) ---------- */
+  #siteHeader {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    padding: 14px 16px; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  #siteHeader .logo { color: #ffd166; font-weight: 700; font-size: 18px; text-decoration: none; letter-spacing: 0.5px; }
+  #siteHeader nav { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  #siteHeader nav a { color: #cfe0f5; text-decoration: none; font-size: 13px; opacity: 0.85; }
+  #siteHeader nav a:hover, #siteHeader nav a:focus { opacity: 1; text-decoration: underline; }
+  #siteFooter {
+    color: #9fb2c9; font-size: 12px; padding: 22px 16px 32px; text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.12); margin-top: 12px; line-height: 2;
+  }
+  #siteFooter a { color: #cfe0f5; text-decoration: none; margin: 0 8px; }
+  #siteFooter a:hover, #siteFooter a:focus { text-decoration: underline; }
 </style>
 </head>
 <body>
 <div id="siteWrap">
+
+  <header id="siteHeader">
+    <a class="logo" href="index.html">🐸 Hopper's Quest</a>
+    <nav>
+      <a href="index.html">ホーム・プレイ</a>
+      <a href="about.html">このサイトについて</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="terms.html">利用規約</a>
+    </nav>
+  </header>
 
   <div id="pageContent">
     <h2>ホッパーズ・クエスト（Hopper's Quest）</h2>
@@ -84,7 +104,6 @@
     <p>もともとは「操作に慣れてきた頃にちょうど良い歯ごたえのアクションゲームが欲しい」という発想から作り始めました。足場の間隔や敵の配置は、何度もプレイしながら少しずつ調整しています。難易度は高めですが、チェックポイントがあるので詰まった場所からすぐやり直せます。</p>
   </div>
 
-  <!-- 広告枠1: 実際の紹介文コンテンツに付随して配置（ゲーム画面/オーバーレイの上には出さない） -->
   <div id="adSlotTop">
     <ins class="adsbygoogle"
          style="display:block"
@@ -107,7 +126,6 @@
       <p id="ovText">左右で移動、ジャンプで跳ぶ。空中でもう一度ジャンプで二段ジャンプ！<br>ダッシュボタンで前方に突進、敵は踏んで倒そう。<br>壁に体当たりしてジャンプすると壁ジャンプもできるよ。</p>
       <button id="ovButton">はじめる</button>
       <button id="ovButton2" class="secondary hidden">📺 広告を見て残機+1</button>
-      <button id="ovRemoveAds" class="secondary hidden">💎 広告を消す・全ステージ解放</button>
     </div>
   </div>
 
@@ -122,12 +140,20 @@
     <h3>よくある質問</h3>
     <p><strong>Q. セーブはできますか？</strong><br>A. 現在のバージョンではステージ内のチェックポイントのみで、ブラウザを閉じるとスコアはリセットされます。</p>
     <p><strong>Q. スマホでも遊べますか？</strong><br>A. はい、画面上のタッチボタンで操作できます。PCではキーボード操作にも対応しています。</p>
-    <p><strong>Q. 広告を消すことはできますか？</strong><br>A. ゲームオーバー画面やクリア画面から「広告を消す」を選ぶと購入ページに移動できます。</p>
+    <p><strong>Q. 広告を消すことはできますか？</strong><br>A. 現在、広告削除の購入機能は提供していません。当サイトは広告収入のみで運営している無料ゲームです。</p>
+    <h3>攻略のコツ</h3>
+    <p>二段ジャンプは「上昇中」ではなく「頂点付近〜落下し始め」のタイミングで入力すると、次の足場までの距離を稼ぎやすくなります。ダッシュは着地際に使うと滑るように距離を伸ばせるので、動く足場を追いかける場面で特に有効です。</p>
+    <p>壁ジャンプは、壁に張り付いた瞬間ではなく、少し滑り落ちてから跳ぶと反対方向への飛距離が伸びます。「1-2 そらの島」の縦穴パートはこのタイミング調整ができるかどうかで難易度が大きく変わります。</p>
+    <p>敵は横から当たると1ダメージですが、ジャンプの落下中に真上から当たれば必ず倒せます。無理に避けようとせず、踏みつけて処理したほうが安全な場面も多いです。</p>
+    <h3>アップデート履歴</h3>
+    <p><strong>v1.2</strong>：「1-3 どうくつラン」にチェックポイントを1箇所追加し、終盤の難易度を微調整しました。</p>
+    <p><strong>v1.1</strong>：壁ジャンプ時の反発speedを調整し、狭い縦穴でも操作しやすいよう修正しました。</p>
+    <p><strong>v1.0</strong>：初回公開。全3ステージ、ダッシュ・二段ジャンプ・壁ジャンプに対応。</p>
     <h3>制作について</h3>
-    <p>本作はHTML5 CanvasとWebAudioのみで作られており、外部の画像・音声ファイルは使用していません。プレイヤーや敵のグラフィックはすべてコードで描画しています。バグ報告や難易度に関するご意見があれば、今後のアップデートで調整していく予定です。</p>
+    <p>本作はHTML5 CanvasとWebAudioのみで作られており、外部の画像・音声ファイルは使用していません。プレイヤーや敵のグラフィックはすべてコードで描画しています。バグ報告や難易度に関するご意見は、<a href="about.html" style="color:#ffd166;">お問い合わせページ</a>からご連絡ください。</p>
+    <p>本サイトの詳しい運営者情報は<a href="about.html" style="color:#ffd166;">このサイトについて</a>を、広告・データの取り扱いについては<a href="privacy.html" style="color:#ffd166;">プライバシーポリシー</a>をご覧ください。</p>
   </div>
 
-  <!-- 広告枠2: ページ下部の説明コンテンツに付随 -->
   <div id="adSlotBottom">
     <ins class="adsbygoogle"
          style="display:block"
@@ -137,11 +163,22 @@
          data-full-width-responsive="true"></ins>
   </div>
 
+  <footer id="siteFooter">
+    <div>
+      <a href="index.html">ホーム</a>|
+      <a href="about.html">このサイトについて・お問い合わせ</a>|
+      <a href="privacy.html">プライバシーポリシー</a>|
+      <a href="terms.html">利用規約</a>
+    </div>
+    <div>&copy; <span id="yearNow">2026</span> Hopper's Quest. 個人が制作・運営する無料ブラウザゲームサイトです。</div>
+  </footer>
+
 </div>
 
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({});
   (adsbygoogle = window.adsbygoogle || []).push({});
+  document.getElementById('yearNow').textContent = new Date().getFullYear();
 </script>
 
 <script>
@@ -221,42 +258,9 @@ window.addEventListener('keyup', function(e){
 });
 
 // ---------- Monetization ----------
-// 表示広告(AdSense)はページ本体の紹介コンテンツ内に固定配置済み（HTML側）。
-// ゲーム内オーバーレイ(タイトル/ゲームオーバー/クリア画面)には表示広告を出さない。
-//
-// リワード広告(残機+1)は表示広告と別物として扱う。実運用では、ポータルSDK
-// (CrazyGames/Poki等)のリワード広告API、またはGoogle Ad Managerの
-// リワード付き広告フォーマットに置き換えること。AdSenseの通常バナーユニットを
-// リワード広告として転用しない。
-//
-// 課金: Stripeの支払いリンクをREMOVE_ADS_URLに設定。決済成功後 ?premium=1 を付けて
-// このページへリダイレクトする想定（簡易判定のため、厳密にはWebhook検証を推奨）。
+// 課金（広告削除・全ステージ解放の購入）機能はオフになっています。
+// 決済リンクの用意ができたら、この位置に購入ボタンの表示ロジックを復活させてください。
 
-var REMOVE_ADS_URL = 'https://buy.stripe.com/REPLACE_WITH_YOUR_PAYMENT_LINK';
-
-var isPremium = false;
-(function loadPremium(){
-  try {
-    isPremium = window.localStorage.getItem('hq_premium') === '1';
-  } catch(e){
-    isPremium = false;
-  }
-})();
-
-function setPremium(val){
-  isPremium = val;
-  try { window.localStorage.setItem('hq_premium', val ? '1':'0'); } catch(e){}
-}
-
-function checkPremiumFromURL(){
-  try {
-    var params = new URLSearchParams(window.location.search);
-    if(params.get('premium') === '1'){ setPremium(true); }
-  } catch(e){}
-}
-checkPremiumFromURL();
-
-// リワード広告のスタブ。実際の広告ネットワーク/ポータルSDKの呼び出しに置き換えてください。
 function showRewardedAd(onReward){
   ovText.innerHTML = '広告を再生中...(スタブ)';
   setTimeout(function(){
@@ -470,7 +474,7 @@ function damagePlayer(){
     state = STATE_GAME_OVER;
     continueUsed = false;
     SFX.gameover();
-    showOverlay('GAME OVER', 'コイン合計: '+totalScore+'枚<br>もう一度挑戦しよう！', 'さいしょから', {watchAd:true, removeAds:true});
+    showOverlay('GAME OVER', 'コイン合計: '+totalScore+'枚<br>もう一度挑戦しよう！', 'さいしょから', {watchAd:true});
   }
 }
 
@@ -482,7 +486,7 @@ function killPlayerPit(){
     state = STATE_GAME_OVER;
     continueUsed = false;
     SFX.gameover();
-    showOverlay('GAME OVER', 'コイン合計: '+totalScore+'枚<br>もう一度挑戦しよう！', 'さいしょから', {watchAd:true, removeAds:true});
+    showOverlay('GAME OVER', 'コイン合計: '+totalScore+'枚<br>もう一度挑戦しよう！', 'さいしょから', {watchAd:true});
     return;
   }
   respawnPlayer();
@@ -498,7 +502,6 @@ function update(dt){
   gameTime += dt;
   if(state !== STATE_PLAY) return;
 
-  // horizontal input
   var wantLeft = input.left, wantRight = input.right;
   if(player.dashTimer > 0){
     player.dashTimer -= dt;
@@ -514,7 +517,6 @@ function update(dt){
     if(player.vx < -MAX_SPEED) player.vx = -MAX_SPEED;
   }
 
-  // dash trigger
   if(input.dashPressed){
     input.dashPressed = false;
     if(!player.dashUsed){
@@ -527,7 +529,6 @@ function update(dt){
     }
   }
 
-  // gravity + wall slide
   var oneWayList = currentOneways();
   if(!player.onGround){
     player.vy += GRAVITY*dt;
@@ -540,7 +541,6 @@ function update(dt){
     player.coyote = COYOTE_TIME;
   }
 
-  // jump buffer
   if(input.jumpPressed){
     input.jumpPressed = false;
     player.jumpBuffer = JUMP_BUFFER;
@@ -578,7 +578,6 @@ function update(dt){
     player.vy *= JUMP_CUT;
   }
 
-  // ---- move X, collide ----
   player.x += player.vx*dt;
   player.wallDir = 0;
   for(var i=0;i<solids.length;i++){
@@ -592,7 +591,6 @@ function update(dt){
   if(player.x < 0) player.x = 0;
   if(player.x + player.w > level.width) player.x = level.width - player.w;
 
-  // ---- move Y, collide ----
   player.prevBottom = player.y + player.h;
   player.y += player.vy*dt;
   player.onGround = false;
@@ -611,7 +609,6 @@ function update(dt){
       }
     }
   }
-  // one-way platforms (land from above only)
   for(i=0;i<oneWayList.length;i++){
     var p = oneWayList[i];
     if(player.vy >= 0 && overlap(player,p) && player.prevBottom <= p.y+8){
@@ -624,7 +621,6 @@ function update(dt){
     }
   }
 
-  // fell in pit
   if(player.y > H + 80){
     killPlayerPit();
     return;
@@ -632,7 +628,6 @@ function update(dt){
 
   if(invincibleTimer > 0) invincibleTimer -= dt;
 
-  // checkpoint
   if(level.checkpoints){
     for(var ci=0; ci<level.checkpoints.length; ci++){
       if(checkpointsHit[ci]) continue;
@@ -646,12 +641,10 @@ function update(dt){
     }
   }
 
-  // spikes
   for(i=0;i<level.spikes.length;i++){
     if(overlap(player, level.spikes[i])){ killPlayerPit(); return; }
   }
 
-  // coins
   for(i=0;i<coins.length;i++){
     var c = coins[i];
     if(c.taken) continue;
@@ -663,7 +656,6 @@ function update(dt){
     }
   }
 
-  // enemies
   for(i=0;i<enemies.length;i++){
     var en = enemies[i];
     if(!en.alive) continue;
@@ -686,27 +678,24 @@ function update(dt){
     }
   }
 
-  // goal
   var g = level.goal;
   if(player.x+player.w > g.x && player.x < g.x+50 && player.y+player.h > g.y-10){
     state = STATE_LEVEL_CLEAR;
     SFX.win();
     var isLast = currentLevelIndex === LEVELS.length-1;
     if(isLast){
-      showOverlay('ALL CLEAR!', '全ステージクリア！<br>コイン合計: '+totalScore+'枚', 'タイトルへ', {removeAds:true});
+      showOverlay('ALL CLEAR!', '全ステージクリア！<br>コイン合計: '+totalScore+'枚', 'タイトルへ', {});
       state = STATE_ALL_CLEAR;
     } else {
       showOverlay('LEVEL CLEAR!', 'コイン: '+levelCoinsCollected+'枚 集めた！<br>合計スコア: '+totalScore, 'つぎのステージへ');
     }
   }
 
-  // camera
   var targetCamX = player.x - W/2 + player.w/2;
   if(targetCamX < 0) targetCamX = 0;
   if(targetCamX > level.width - W) targetCamX = level.width - W;
   camX += (targetCamX - camX) * Math.min(1, dt*8);
 
-  // particles
   for(i=particles.length-1;i>=0;i--){
     var pt = particles[i];
     pt.x += pt.vx*dt; pt.y += pt.vy*dt; pt.vy += 600*dt; pt.life -= dt;
@@ -728,7 +717,6 @@ function drawBackground(theme){
   grad.addColorStop(0, th.sky1); grad.addColorStop(1, th.sky2);
   ctx.fillStyle = grad; ctx.fillRect(0,0,W,H);
 
-  // clouds/stars parallax
   ctx.fillStyle = theme==='cave' ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.85)';
   for(var i=0;i<8;i++){
     var cx = ((i*260 - camX*0.25) % (W+300) + (W+300)) % (W+300) - 150;
@@ -738,7 +726,6 @@ function drawBackground(theme){
     ctx.ellipse(cx+26, cy+6, 24, 13, 0, 0, Math.PI*2);
     ctx.fill();
   }
-  // hills parallax
   ctx.fillStyle = th.hill2;
   for(i=0;i<6;i++){
     var hx = ((i*340 - camX*0.45) % (W+400) + (W+400)) % (W+400) - 200;
@@ -871,7 +858,6 @@ function drawPlayer(){
   ctx.beginPath();
   ctx.ellipse(0,0, player.w/2, player.h/2, 0, 0, Math.PI*2);
   ctx.fill();
-  // eyes
   ctx.fillStyle = '#fff';
   var ex = player.facing*4;
   ctx.beginPath(); ctx.ellipse(ex-6, -6, 5.5, 6.5, 0,0,Math.PI*2); ctx.fill();
@@ -879,7 +865,6 @@ function drawPlayer(){
   ctx.fillStyle = '#2a1a1a';
   ctx.beginPath(); ctx.arc(ex-6+player.facing*1.5, -6, 2.6, 0, Math.PI*2); ctx.fill();
   ctx.beginPath(); ctx.arc(ex+6+player.facing*1.5, -6, 2.6, 0, Math.PI*2); ctx.fill();
-  // little antenna
   ctx.strokeStyle = '#ff8c42'; ctx.lineWidth = 3;
   ctx.beginPath(); ctx.moveTo(0,-player.h/2); ctx.lineTo(player.facing*4, -player.h/2-10); ctx.stroke();
   ctx.fillStyle = '#ffd166';
@@ -950,7 +935,6 @@ var overlayEl = document.getElementById('overlay');
 var ovText = document.getElementById('ovText');
 var ovButton = document.getElementById('ovButton');
 var ovButton2 = document.getElementById('ovButton2');
-var ovRemoveAds = document.getElementById('ovRemoveAds');
 var ovTitle = overlayEl.querySelector('h1');
 
 function showOverlay(title, text, buttonLabel, opts){
@@ -959,14 +943,11 @@ function showOverlay(title, text, buttonLabel, opts){
   ovText.innerHTML = text;
   ovButton.textContent = buttonLabel;
   ovButton2.classList.toggle('hidden', !opts.watchAd);
-  ovRemoveAds.classList.toggle('hidden', !(opts.removeAds && !isPremium));
   overlayEl.classList.remove('hidden');
 }
 function hideOverlay(){ overlayEl.classList.add('hidden'); }
 
-// 初期表示（タイトル画面）の課金状態反映
 ovButton2.classList.add('hidden');
-ovRemoveAds.classList.toggle('hidden', isPremium);
 
 ovButton.addEventListener('pointerdown', function(e){
   e.preventDefault();
@@ -992,11 +973,9 @@ ovButton.addEventListener('pointerdown', function(e){
     ovText.innerHTML = '左右で移動、ジャンプで跳ぶ。空中でもう一度ジャンプで二段ジャンプ！<br>ダッシュボタンで前方に突進、敵は踏んで倒そう。<br>壁に体当たりしてジャンプすると壁ジャンプもできるよ。';
     ovButton.textContent = 'はじめる';
     ovButton2.classList.add('hidden');
-    ovRemoveAds.classList.toggle('hidden', isPremium);
   }
 });
 
-// 📺 リワード広告を見て残機+1（ゲームオーバー時、1回だけ使える）
 ovButton2.addEventListener('pointerdown', function(e){
   e.preventDefault();
   ensureAudio();
@@ -1012,12 +991,6 @@ ovButton2.addEventListener('pointerdown', function(e){
   }
 });
 
-// 💎 広告削除・全ステージ解放（Stripe決済リンクを別タブで開く）
-ovRemoveAds.addEventListener('pointerdown', function(e){
-  e.preventDefault();
-  window.open(REMOVE_ADS_URL, '_blank');
-});
-
 // ---------- Main loop ----------
 function loop(ts){
   if(!lastTs) lastTs = ts;
@@ -1030,6 +1003,7 @@ function loop(ts){
 requestAnimationFrame(loop);
 
 })();
+
 </script>
 </body>
 </html>
